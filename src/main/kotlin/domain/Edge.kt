@@ -13,7 +13,7 @@ data class NotWeightedEdge(
     }
 }
 
-data class WeightedEdge<T>(
+data class WeightedEdge<T: Number>(
     override val fromVertex: Vertex,
     override val toVertex: Vertex,
     val weight: T
