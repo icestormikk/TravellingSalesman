@@ -4,26 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bc1ee40b-1852-47c8-9237-fcc6a1bf4c29" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jpa-buddy.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/domain/Edge.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/domain/Graph.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/domain/Vertex.kt" afterDir="false" />
+    <list default="true" id="bc1ee40b-1852-47c8-9237-fcc6a1bf4c29" name="Changes" comment="Updated to the next version">
+      <change afterPath="$PROJECT_DIR$/.idea/git_toolbox_prj.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/domain/SolutionsGraphNode.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/enums/NodeType.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/utilities/FileUtilities.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/utilities/GraphUtilities.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testmatrix.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/domain/Graph.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/domain/Graph.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/interfaces/Graph.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/interfaces/Graph.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/utilities/Algorithms.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/utilities/Algorithms.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,11 +66,15 @@
         <option value="Kotlin Interface" />
         <option value="Kotlin Class" />
         <option value="Kotlin Enum" />
+        <option value="Kotlin Object" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitToolBoxStore">
+    <option name="projectConfigVersion" value="5" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -91,21 +87,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last.edited.regexp": "",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
       <recent name="interfaces" />
@@ -136,10 +137,16 @@
     <configuration name="MainKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="MainKt" />
       <module name="TravellingSalesman.main" />
+      <option name="PROGRAM_PARAMETERS" value="testmatrix.txt" />
+      <shortenClasspath name="NONE" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Gradle.TravellingSalesman [clean]" />
+      <item itemvalue="Kotlin.MainKt" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Kotlin.MainKt" />
@@ -158,8 +165,91 @@
       <workItem from="1670262123285" duration="11787000" />
       <workItem from="1670299517913" duration="1332000" />
       <workItem from="1670304863566" duration="645000" />
-      <workItem from="1670329612712" duration="11430000" />
+      <workItem from="1670329612712" duration="22785000" />
+      <workItem from="1670385949810" duration="990000" />
+      <workItem from="1670406642216" duration="14862000" />
+      <workItem from="1670442386115" duration="5094000" />
+      <workItem from="1670478399443" duration="8289000" />
+      <workItem from="1670488457782" duration="832000" />
+      <workItem from="1670489388573" duration="8858000" />
+      <workItem from="1670499524370" duration="12403000" />
+      <workItem from="1670558821502" duration="1050000" />
+      <workItem from="1670563381647" duration="1439000" />
+      <workItem from="1670572066828" duration="9000" />
+      <workItem from="1670604529719" duration="7247000" />
+      <workItem from="1670657676397" duration="38173000" />
     </task>
+    <task id="LOCAL-00001" summary="Initial commit">
+      <created>1670343144495</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1670343144495</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Initial commit">
+      <created>1670343159380</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1670343159380</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Added Edge entity">
+      <created>1670343199706</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1670343199706</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Added entity for graph representing">
+      <created>1670343244516</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1670343244516</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Added Vertex entity">
+      <created>1670343258823</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1670343258823</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Included test data">
+      <created>1670343292958</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1670343292958</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Added an object containing functions for the operation of the algorithm for the traveling salesman problem">
+      <created>1670416185892</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1670416185892</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Reducing the area of acceptable types for an Edge object">
+      <created>1670416233578</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1670416233578</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Transferring a list of edges from a function to the primary constructor + another updates">
+      <created>1670416314234</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1670416314234</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Definition of a function for copying two-dimensional arrays">
+      <created>1670416365474</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1670416365474</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -178,5 +268,17 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Initial commit" />
+    <MESSAGE value="Added Edge entity" />
+    <MESSAGE value="Added entity for graph representing" />
+    <MESSAGE value="Added Vertex entity" />
+    <MESSAGE value="Included test data" />
+    <MESSAGE value="Added an object containing functions for the operation of the algorithm for the traveling salesman problem" />
+    <MESSAGE value="Reducing the area of acceptable types for an Edge object" />
+    <MESSAGE value="Transferring a list of edges from a function to the primary constructor" />
+    <MESSAGE value="Transferring a list of edges from a function to the primary constructor + another updates" />
+    <MESSAGE value="Definition of a function for copying two-dimensional arrays" />
+    <MESSAGE value="Updated to the next version" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated to the next version" />
   </component>
 </project>

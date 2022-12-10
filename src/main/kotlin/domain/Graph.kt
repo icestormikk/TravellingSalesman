@@ -3,10 +3,12 @@ package domain
 import interfaces.Graph
 
 open class NotWeightedGraph(
-    vararg edges: NotWeightedEdge
+    edges: List<NotWeightedEdge>
 ) : Graph<NotWeightedEdge> {
     open val id: Long = entityCounter++
     override val adjVertices = mutableMapOf<Vertex, MutableList<Vertex>>()
+
+    constructor(vararg edges: NotWeightedEdge) : this(edges.toList())
 
     companion object {
         private var entityCounter = 0L
@@ -32,21 +34,22 @@ open class NotWeightedGraph(
 }
 
 class WeightedGraph<T : Number>(
-    vararg edges: WeightedEdge<T>
+    edges: List<WeightedEdge<T>>
 ) : Graph<WeightedEdge<T>> {
+    val id: Long = entityCounter++
+    override val adjVertices = mutableMapOf<Vertex, MutableList<Pair<Vertex, T>>>()
+
+    constructor(vararg edges: WeightedEdge<T>) : this(edges.toList())
+
     companion object {
         private var entityCounter = 0L
     }
-    val id: Long = entityCounter++
-    override val adjVertices = mutableMapOf<Vertex, MutableList<Pair<Vertex, T>>>()
 
     init {
         edges.forEach {
             with (adjVertices) {
                 putIfAbsent(it.fromVertex, mutableListOf())
-                putIfAbsent(it.toVertex, mutableListOf())
                 this[it.fromVertex]!!.add(Pair(it.toVertex, it.weight))
-                this[it.toVertex]!!.add(Pair(it.fromVertex, it.weight))
             }
         }
     }
@@ -80,19 +83,22 @@ class WeightedGraph<T : Number>(
     }
 }
 
-inline fun <reified T : Number> WeightedGraph<T>.toAdjacencyMatrix() : Array<Array<T>> {
+inline fun <reified T : Number> WeightedGraph<T>.toAdjacencyMatrix(
+    infinityValue: T
+) : Array<Array<T>> {
     val matrix = Array(adjVertices.size) {
-        Array(adjVertices.size) { 0 as T }
+        val initialValue = adjVertices[adjVertices.keys.first()]!![0].second
+        Array(adjVertices.size) { initialValue }
     }
 
     for (i in matrix.indices) {
-        for (j in i until matrix[0].size) {
+        for (j in matrix.indices) {
             with (adjVertices) {
-                val distance = (get(adjVertices.keys.elementAt(i))!!
+                val distance =
+                    get(adjVertices.keys.elementAt(i))!!
                     .firstOrNull { it.first.id == adjVertices.keys.elementAt(j).id }
-                    ?.second ?: Int.MAX_VALUE) as T
+                    ?.second ?: infinityValue
                 matrix[i][j] = distance
-                matrix[j][i] = distance
             }
         }
     }

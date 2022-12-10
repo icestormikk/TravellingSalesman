@@ -1,24 +1,32 @@
-import domain.Vertex
-import domain.WeightedEdge
-import domain.WeightedGraph
+import utilities.Algorithms.travellingSalesman
+import utilities.FileUtilities.fetchGraphFromArguments
+import kotlin.time.ExperimentalTime
+import kotlin.time.measureTime
 
-fun main() {
-    val vertex1 = Vertex("City A")
-    val vertex2 = Vertex("City B")
-    val vertex3 = Vertex("City C")
-    val vertex4 = Vertex("City D")
+@OptIn(ExperimentalTime::class)
+fun main(args: Array<String>) {
+    val graph = fetchGraphFromArguments(args) ?: return
 
-    with (WeightedGraph<Int>()) {
-        buildGraph(
-            WeightedEdge(vertex1, vertex2, 10),
-            WeightedEdge(vertex2, vertex3, 20),
-            WeightedEdge(vertex3, vertex4, 30),
-            WeightedEdge(vertex4, vertex1, 40),
-            WeightedEdge(vertex1, vertex3, 5)
-        )
-        printGraph()
-        println(totalDistance(0, 0, 3, 2) { source: Int, destination: Int ->
-            source + destination
-        })
+    val infinityDoubleValue = Double.MAX_VALUE
+    val minus: (x: Double, y: Double) -> Double = { x, y ->
+        if (x != Double.MAX_VALUE && y != Double.MAX_VALUE)
+            x - y
+        else x
     }
+    val plus: (x: Double, y: Double) -> Double = { x, y ->
+        if (x != Double.MAX_VALUE && y != Double.MAX_VALUE)
+            x + y
+        else x
+    }
+
+    val duration = measureTime {
+        graph.travellingSalesman(
+            labelsList = graph.getAllVertices().map { it.label }.toMutableList(),
+            zeroValue = 0.0,
+            infinityValue = infinityDoubleValue,
+            onMinus = minus,
+            onPlus = plus
+        )
+    }
+    println("\nExecution time: $duration")
 }
