@@ -109,6 +109,7 @@ object Algorithms {
             val finalPath = path.plus(Pair(rowsList[pathFinalPart.first], columnsList[pathFinalPart.second]))
 
             println("""
+                
                 The most optimal path: ${finalPath.toOneSortedPath().joinToString(" -> ")}
                 Total length: ${currentSolution.lowerBorder}""".trimIndent()
             )
@@ -194,7 +195,7 @@ object Algorithms {
     fun <T> Array<Array<T>>.printAdjacencyMatrix(infinityValue: T) {
         forEach { array ->
             array.forEach {
-                print(String.format("%-3s", if (it == infinityValue) 'M' else "$it"))
+                print(String.format("%-6s", if (it == infinityValue) 'M' else "$it"))
             }
             println()
         }
@@ -206,6 +207,7 @@ object Algorithms {
         excludingCell: Pair<Int, Int>,
         infinityValue: T
     ): Array<Array<T>> where T: Number, T: Comparable<T> {
+        this[excludingCell.first][excludingCell.second] = infinityValue
         val result = Array(size - 1) { arrayOf<T>() }
         var rowInResultCounter = 0
         closeOppositePath(
@@ -230,9 +232,8 @@ object Algorithms {
 
     fun <T> Array<Array<T>>.pathIsFind(
         infinityValue: T
-    ) : Boolean where T: Number, T: Comparable<T> {
-        return size*size - sumOf { it.count { elem -> elem == infinityValue } } == 1
-    }
+    ) : Boolean where T: Number, T: Comparable<T> =
+        size*size - sumOf { it.count { elem -> elem == infinityValue } } == 1
 
     fun <T> Array<Array<T>>.closeOppositePath(
         rowLabels: List<String>,

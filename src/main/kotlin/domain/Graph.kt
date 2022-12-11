@@ -46,7 +46,13 @@ class WeightedGraph<T : Number>(
     }
 
     init {
-        edges.forEach {
+        edges.toSet().forEach {
+            if (edges.firstOrNull { edge -> edge.fromVertex.id == it.toVertex.id && edge.toVertex.id == it.fromVertex.id } == null)
+                throw IllegalArgumentException(
+                    "The road from point ${it.toVertex.label} to point ${it.fromVertex.label} was not found, " +
+                            "but the road from point ${it.fromVertex.label} to point ${it.toVertex.label} exists"
+                )
+
             with (adjVertices) {
                 putIfAbsent(it.fromVertex, mutableListOf())
                 this[it.fromVertex]!!.add(Pair(it.toVertex, it.weight))

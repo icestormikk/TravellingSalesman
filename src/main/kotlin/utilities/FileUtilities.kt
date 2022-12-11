@@ -1,7 +1,5 @@
 package utilities
 
-import domain.Vertex
-import domain.WeightedEdge
 import domain.WeightedGraph
 import utilities.GraphUtilities.toTypedGraph
 import java.io.File
@@ -13,23 +11,26 @@ private const val STANDARD_INFINITY_INDICATOR = "M"
 
 object FileUtilities {
     fun fetchGraphFromArguments(args: Array<String>) : WeightedGraph<Double>? =
-        if (args.isNotEmpty()) {
-            val filepath = Path(args[0])
-            try {
+        try {
+            if (args.isNotEmpty()) {
+                val filepath = Path(args[0])
                 readFile(filepath).toTypedGraph(infinityValue = Double.MAX_VALUE)
-            } catch (_: FileNotFoundException) {
-                System.err.println("The specified file was not found: $filepath")
-                print("Use a standard graph? (y/n): ")
-                if (readln() != "y")
-                    fetchDefaultGraph()
-                else null
-            } catch (ex: NumberFormatException) {
-                println(ex.localizedMessage)
-                null
+            } else {
+                println("The file with the graph is not specified. I will use standard graph.")
+                fetchDefaultGraph()
             }
-        } else {
-            println("The file with the graph is not specified. I will use standard graph.")
-            fetchDefaultGraph()
+        } catch (_: FileNotFoundException) {
+            System.err.println("The specified file was not found: ${Path(args[0])}")
+            print("Use a standard graph? (y/n): ")
+            if (readln() != "y")
+                fetchDefaultGraph()
+            else null
+        } catch (ex: NumberFormatException) {
+            System.err.println(ex.localizedMessage)
+            null
+        } catch (ex: IllegalArgumentException) {
+            System.err.println(ex.localizedMessage)
+            null
         }
 
     private fun readFile(path: Path) : Array<Array<Double>> {
@@ -42,8 +43,13 @@ object FileUtilities {
             var result: MutableList<Array<Double>>? = null
             forEach {
                 val arrayLine = it.split(Regex("\\s")).map { element ->
-                    if (element == infinitePathIndicator) Double.MAX_VALUE
-                    else element.toDouble()
+                    if (element == infinitePathIndicator)
+                        Double.MAX_VALUE
+                    else
+                        element.toDouble().apply {
+                            if (this <= 0.0)
+                                throw IllegalArgumentException("The distance between the points should be positive ($this)")
+                        }
                 }.toTypedArray()
                 if (result == null)
                     result = mutableListOf(arrayLine)
@@ -53,22 +59,7 @@ object FileUtilities {
         }
     }
 
-    private fun fetchDefaultGraph(): WeightedGraph<Double> {
-        val vertex1 = Vertex("City A")
-        val vertex2 = Vertex("City B")
-        val vertex3 = Vertex("City C")
-        val vertex4 = Vertex("City D")
-        val vertex5 = Vertex("City E")
-        return WeightedGraph(
-            WeightedEdge(vertex1, vertex2, 20.0),
-            WeightedEdge(vertex2, vertex3, 40.0),
-            WeightedEdge(vertex3, vertex4, 60.0),
-            WeightedEdge(vertex4, vertex5, 70.0),
-            WeightedEdge(vertex5, vertex1, 10.0),
-            WeightedEdge(vertex1, vertex4, 1.0),
-            WeightedEdge(vertex1, vertex3, 2.0),
-            WeightedEdge(vertex2, vertex4, 10.0),
-            WeightedEdge(vertex2, vertex5, 40.0),
-        )
-    }
+    private fun fetchDefaultGraph(): WeightedGraph<Double> =
+        readFile(Path("examplematrix.txt"))
+            .toTypedGraph(Double.MAX_VALUE)
 }
