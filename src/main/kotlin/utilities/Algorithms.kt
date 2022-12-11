@@ -48,18 +48,21 @@ object Algorithms {
 
                 val maxZeroDegreeCell = getMaxZeroDegreeCell(zeroValue, onPlus)
                 val reducedMatrix = reduction(
-                    rowLabels = currentSolution.rowsList,
-                    columnLabels = currentSolution.columnsList,
                     excludingCell = maxZeroDegreeCell.first,
                     infinityValue = infinityValue
                 )
-
                 val removedRowLabel = currentSolution.rowsList.elementAt(maxZeroDegreeCell.first.first)
                 val removedColumnLabel = currentSolution.columnsList.elementAt(maxZeroDegreeCell.first.second)
 
                 val updatedRowsList = currentSolution.rowsList.minus(removedRowLabel).toMutableList()
                 val updatedColumnsList = currentSolution.columnsList.minus(removedColumnLabel).toMutableList()
 
+                reducedMatrix.closeOppositePath(
+                    rowLabels = updatedRowsList,
+                    columnLabels = updatedColumnsList,
+                    currentLabels = Pair(removedRowLabel, removedColumnLabel),
+                    infinityValue = infinityValue
+                )
                 with(solutions) {
                     removeIf { it.id == currentSolution.id }
                     if (localLowerBorder != null) {
@@ -83,7 +86,7 @@ object Algorithms {
                                 ),
                                 SolutionsGraphNode(
                                     type = PATH_EXCLUDED,
-                                    lowerBorder = onPlus(localLowerBorder, maxZeroDegreeCell.second),
+                                    lowerBorder = localLowerBorder,
                                     path = currentSolution.path,
                                     currentAdjacencyMatrix = currentSolution.currentAdjacencyMatrix,
                                     rowsList = currentSolution.rowsList,
@@ -109,7 +112,6 @@ object Algorithms {
             val finalPath = path.plus(Pair(rowsList[pathFinalPart.first], columnsList[pathFinalPart.second]))
 
             println("""
-                
                 The most optimal path: ${finalPath.toOneSortedPath().joinToString(" -> ")}
                 Total length: ${currentSolution.lowerBorder}""".trimIndent()
             )
@@ -152,14 +154,14 @@ object Algorithms {
             ROOT -> {
                 with (minimumsByRowsAndColumns!!) {
                     onPlus(
-                        first.fold(zeroValue, onPlus),
-                        second.fold(zeroValue, onPlus)
+                        this.first.fold(zeroValue, onPlus),
+                        this.second.fold(zeroValue, onPlus)
                     )
                 }
             }
             PATH_INCLUDED -> {
-                val rowMinimumsSum = rowsReduction(onMinus!!).fold(zeroValue, onPlus)
-                val columnMinimumSum = columnsReduction(onMinus).fold(zeroValue, onPlus)
+                val rowMinimumsSum = this.rowsReduction(onMinus!!).fold(zeroValue, onPlus)
+                val columnMinimumSum = this.columnsReduction(onMinus).fold(zeroValue, onPlus)
                 val totalSum = onPlus(rowMinimumsSum, columnMinimumSum)
 
                 onPlus(previousValue!!, totalSum)
@@ -202,20 +204,12 @@ object Algorithms {
     }
 
     inline fun <reified T> Array<Array<T>>.reduction(
-        rowLabels: List<String>,
-        columnLabels: List<String>,
         excludingCell: Pair<Int, Int>,
         infinityValue: T
     ): Array<Array<T>> where T: Number, T: Comparable<T> {
         this[excludingCell.first][excludingCell.second] = infinityValue
         val result = Array(size - 1) { arrayOf<T>() }
         var rowInResultCounter = 0
-        closeOppositePath(
-            rowLabels = rowLabels,
-            columnLabels = columnLabels,
-            currentCellCords = excludingCell,
-            infinityValue = infinityValue
-        )
 
         forEachIndexed { index: Int, values: Array<T> ->
             if (index != excludingCell.first) {
@@ -232,21 +226,20 @@ object Algorithms {
 
     fun <T> Array<Array<T>>.pathIsFind(
         infinityValue: T
-    ) : Boolean where T: Number, T: Comparable<T> =
-        size*size - sumOf { it.count { elem -> elem == infinityValue } } == 1
+    ) : Boolean where T: Number, T: Comparable<T> {
+        return size*size - sumOf { it.count { elem -> elem == infinityValue } } == 1
+    }
 
     fun <T> Array<Array<T>>.closeOppositePath(
         rowLabels: List<String>,
         columnLabels: List<String>,
-        currentCellCords: Pair<Int, Int>,
+        currentLabels: Pair<String, String>,
         infinityValue: T,
     ) {
-        val currentLabelsPair = Pair(rowLabels[currentCellCords.first], columnLabels[currentCellCords.second])
-
-        val newRowIndex = rowLabels.indexOfFirst { it == currentLabelsPair.second }.apply {
+        val newRowIndex = rowLabels.indexOfFirst { it == currentLabels.second }.apply {
             if (this < 0) return
         }
-        val newColumnIndex = columnLabels.indexOfFirst { it == currentLabelsPair.first }.apply {
+        val newColumnIndex = columnLabels.indexOfFirst { it == currentLabels.first }.apply {
             if (this < 0) return
         }
         this[newRowIndex][newColumnIndex] = infinityValue

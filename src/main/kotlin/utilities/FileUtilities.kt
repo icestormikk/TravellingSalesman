@@ -22,9 +22,8 @@ object FileUtilities {
         } catch (_: FileNotFoundException) {
             System.err.println("The specified file was not found: ${Path(args[0])}")
             print("Use a standard graph? (y/n): ")
-            if (readln() != "y")
-                fetchDefaultGraph()
-            else null
+            if (readln() != "y") null
+            else fetchDefaultGraph()
         } catch (ex: NumberFormatException) {
             System.err.println(ex.localizedMessage)
             null
@@ -34,7 +33,7 @@ object FileUtilities {
         }
 
     private fun readFile(path: Path) : Array<Array<Double>> {
-        File(path.toUri()).readLines().apply {
+        File(path.toString()).readLines().apply {
             println("File successfully fetched: $path")
             print("Which symbol will be used to indicate the infinite length of the path? ($STANDARD_INFINITY_INDICATOR): ")
             val userCallback = readln()
